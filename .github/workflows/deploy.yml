@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_NAME: ${{acc.FUNCTION_APP_NAME}}
+  AZURE_FUNCTIONAPP_NAME: aa
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'      
   NODE_VERSION: '10.x'                     
 
