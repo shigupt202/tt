@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appName": {
+            "value": "${{acc.FUNCTION_APP_NAME}}"
+        },
+        "runtime": {
+            "value": "${{acc.RUN_TIME}}"
+        },
+        "appInsightsLocation": {
+            "value": "${{acc.APP_INSIGHTS_LOCATION}}"
+        }
+      }
+  }

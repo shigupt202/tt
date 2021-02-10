@@ -1,0 +1,32 @@
+on: 
+  workflow_dispatch:
+
+name: Provision azure resources
+env:
+  RESOURCE_GROUP_NAME: ${{acc.RESOURCE_GROUP}}
+  RESOURCE_GROUP_LOCATION: ${{acc.RESOURCE_GROUP_LOCATION}}
+
+jobs:
+  provision-azure-resources:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Create resource group
+      uses: Azure/cli@1.0.4
+      with:
+        inlineScript: |
+          if [ $(az group exists --name $RESOURCE_GROUP_NAME) = false ]; then
+            az group create --name $RESOURCE_GROUP_NAME --location $RESOURCE_GROUP_LOCATION
+          fi
+    - name: Deploy ARM template for function app
+      uses: Azure/arm-deploy@main
+      with:
+        scope: 'resourcegroup'
+        resourceGroupName: ${{env.RESOURCE_GROUP_NAME}}
+        template: 'deployManifests/functionAppTemplate.json'
+        parameters: 'deployManifests/functionAppDeploy.parameters.json'

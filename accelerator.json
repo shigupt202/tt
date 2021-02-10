@@ -1,0 +1,52 @@
+{
+  "name": "Nodejs Azure function app accelerator",
+  "description": "An accelerator to deploy a NodeJs Azure function app",
+  "tags": [
+    "nodejs",
+    "azure",
+    "functionapp"
+  ],
+  "inputs": {
+    "secrets" : [
+      {
+        "name": "AZURE_CREDENTIALS",
+        "description": "Enter your azure credentials (Output of az ad sp create-for-rbac --sdk-auth command)"
+      }
+    ],
+    "placeHolders": [
+      {
+        "name": "RESOURCE_GROUP",
+        "description": "Resource group name"
+      },
+      {
+        "name": "RESOURCE_GROUP_LOCATION",
+        "description": "Resource group location"
+      },
+      {
+        "name": "FUNCTION_APP_NAME",
+        "description": "Name of the function to be created"
+      },
+      {
+        "name": "RUN_TIME",
+        "description": "Runtime stack of the app"
+      },
+      {
+        "name": "APP_INSIGHTS_LOCATION",
+        "description": "Location of app insights"
+      }
+    ]
+  },
+  "settings": [
+    {
+        "name": "vulnerability_alerts",
+        "value": "enabled"
+    }
+  ],
+  "startupWorkflows" : [
+    {
+      "path": ".github/workflows/provisionResources.yml",
+      "name": "provisionResources.yml",
+      "ref": "main"
+    }
+    ]
+}
